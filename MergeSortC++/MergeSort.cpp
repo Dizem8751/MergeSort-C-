@@ -87,3 +87,39 @@ void MergeSort<T>::merge(std::vector<T>& arr, int left, int mid, int right) {
         k++;
     }
 }
+
+/**
+ * @brief Rekurencyjna metoda realizuj¹ca strategiê "Dziel i Rz¹dŸ".
+ *
+ * Metoda dzieli zakres tablicy na dwie po³owy, wywo³uje siê rekurencyjnie dla
+ * ka¿dej z nich, a nastêpnie scala posortowane po³ówki.
+ *
+ * @tparam T Typ danych w wektorze.
+ * @param arr Wektor danych.
+ * @param left Lewy indeks zakresu.
+ * @param right Prawy indeks zakresu.
+ */
+template <typename T>
+void MergeSort<T>::sortInternal(std::vector<T>& arr, int left, int right) {
+    if (left >= right) {
+        return; // Warunek stopu rekurencji (1 element lub brak)
+    }
+
+    // Znajdowanie œrodka, aby podzieliæ tablicê na dwie po³owy
+    int mid = left + (right - left) / 2;
+
+    // Rekurencyjne sortowanie pierwszej i drugiej po³owy
+    sortInternal(arr, left, mid);
+    sortInternal(arr, mid + 1, right);
+
+    // Scalanie posortowanych po³ówek
+    merge(arr, left, mid, right);
+}
+
+/**
+ * @brief Jawna instancjacja szablonu dla typu int.
+ * Pozwala na oddzielenie definicji szablonu w pliku .cpp od deklaracji w .h.
+ */
+
+template class MergeSort<int>;
+template class MergeSort<double>;
