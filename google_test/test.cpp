@@ -131,3 +131,78 @@ TEST(MergeSortTests, DuplicatesPositive) {
     sorter.sort(arr);
     EXPECT_EQ(arr, expected);
 }
+
+/**
+ * @brief Test 9: Sprawdza sortowanie tablicy z duplikatami (liczby ujemne).
+ */
+TEST(MergeSortTests, DuplicatesNegative) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { -2, -5, -2, -10 };
+    std::vector<int> expected = { -10, -5, -2, -2 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
+
+/**
+ * @brief Test 10: Sprawdza sortowanie tablicy mieszanej z duplikatami.
+ *
+ * Kombinacja liczb ujemnych, dodatnich oraz zera, z powtórzeniami.
+ */
+TEST(MergeSortTests, DuplicatesMixed) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { -1, 2, -1, 0, 2, 5 };
+    std::vector<int> expected = { -1, -1, 0, 2, 2, 5 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
+
+/**
+ * @brief Test 11: Sprawdza sortowanie ma³ej tablicy (2 elementy).
+ */
+TEST(MergeSortTests, TwoElementsSorted) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { 1, 2 };
+    std::vector<int> expected = { 1, 2 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
+
+/**
+ * @brief Test 12: Test wydajnoœciowy/poprawnoœciowy dla du¿ej tablicy (>100 elementów).
+ *
+ * Generuje tablicê o rozmiarze 150 z losowymi danymi i sprawdza posortowanie.
+ */
+TEST(MergeSortTests, LargeArray) {
+    MergeSort<int> sorter;
+    std::vector<int> arr(150);
+    // Generowanie losowych danych
+    std::generate(arr.begin(), arr.end(), std::rand);
+
+    sorter.sort(arr);
+    EXPECT_TRUE(std::is_sorted(arr.begin(), arr.end()));
+    EXPECT_EQ(arr.size(), 150);
+}
+
+/**
+ * @brief Test 13: Z³o¿ony test dla du¿ej tablicy z ró¿norodnymi danymi.
+ *
+ * Tablica zawiera >100 elementów, w tym:
+ * - liczby ujemne (z duplikatami),
+ * - liczby dodatnie (z duplikatami),
+ * - liczby losowe.
+ */
+TEST(MergeSortTests, LargeArrayMixedAndDuplicates) {
+    MergeSort<int> sorter;
+    std::vector<int> arr;
+    // Dodajemy 50 ujemnych
+    for (int i = 0; i < 50; ++i) arr.push_back(-(i % 10)); // duplikaty
+    // Dodajemy 50 dodatnich
+    for (int i = 0; i < 50; ++i) arr.push_back(i % 10); // duplikaty
+    // Dodajemy 20 losowych
+    for (int i = 0; i < 20; ++i) arr.push_back(std::rand() % 100 - 50);
+
+    EXPECT_GT(arr.size(), 100);
+
+    sorter.sort(arr);
+    EXPECT_TRUE(std::is_sorted(arr.begin(), arr.end()));
+}
