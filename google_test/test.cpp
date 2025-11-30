@@ -81,3 +81,53 @@ TEST(MergeSortTests, NegativeNumbersOnly) {
     EXPECT_EQ(arr, expected);
 }
 
+/**
+ * @brief Test 5: Sprawdza sortowanie tablicy mieszanej (liczby dodatnie i ujemne).
+ *
+ * Weryfikuje, czy algorytm poprawnie obs³uguje przejœcie przez zero.
+ */
+TEST(MergeSortTests, MixedNumbers) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { -5, 10, 0, -2, 5 };
+    std::vector<int> expected = { -5, -2, 0, 5, 10 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
+
+/**
+ * @brief Test 6: Sprawdza obs³ugê pustej tablicy.
+ *
+ * Oczekiwane zachowanie: brak rzuconego wyj¹tku i tablica pozostaje pusta.
+ */
+TEST(MergeSortTests, EmptyArray) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = {};
+    EXPECT_NO_THROW(sorter.sort(arr));
+    EXPECT_TRUE(arr.empty());
+}
+
+/**
+ * @brief Test 7: Sprawdza zachowanie dla tablicy jednoelementowej.
+ *
+ * Oczekiwane zachowanie: Tablica pozostaje bez zmian.
+ */
+TEST(MergeSortTests, SingleElement) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { 42 };
+    std::vector<int> expected = { 42 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
+
+/**
+ * @brief Test 8: Sprawdza sortowanie tablicy z duplikatami (liczby dodatnie).
+ *
+ * Weryfikuje, czy powtarzaj¹ce siê wartoœci s¹ poprawnie uk³adane obok siebie.
+ */
+TEST(MergeSortTests, DuplicatesPositive) {
+    MergeSort<int> sorter;
+    std::vector<int> arr = { 3, 1, 2, 3, 1 };
+    std::vector<int> expected = { 1, 1, 2, 3, 3 };
+    sorter.sort(arr);
+    EXPECT_EQ(arr, expected);
+}
